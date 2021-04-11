@@ -1,0 +1,34 @@
+version: "3"
+services:
+  api_hulk_store:
+    container_name: api_fastify_hulk_store
+    restart: always
+    build: api_hulk/.
+    volumes:
+      - ./api_hulk:/usr/src/app
+      - ./api_hulk/node_modules:/usr/src/app/node_modules
+
+    depends_on:
+      - mongo
+    environment:
+      - HULKSTORE_DOMAIN=${HULKSTORE_DOMAIN}
+    ports:
+      - "3001:3001"
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo_hulk_store
+    image: mongo:4
+    volumes:
+      - mongo_hulk_store_volumen:/data/db
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+    labels:
+      traefik.port: 27017
+
+volumes:
+  mongo_hulk_store_volumen:
+
