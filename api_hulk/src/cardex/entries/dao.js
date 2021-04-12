@@ -53,6 +53,15 @@ module.exports = class entriesDAO {
       return false;
     }
   }
+  static async updateEntries(id,obj) {
+    try {
+      const updateEntries = await entriesModel.findByIdAndUpdate(id, obj);
+      return updateEntries;
+    } catch (error) {
+      console.log(error)
+      return false;
+    }
+  }
   static async search(obj) {
     try {
       /**console.log(obj, '..')

@@ -30,6 +30,14 @@ typings/
 
 # Angular build build / generate output
 dist
-dist/
+/dist
 
+#Node recreated
+package-lock.json
+/package-lock.json
 
+#Editors and system 
+.DS_Store
+.vscode
+.angulardoc.json
+npm-debug.log

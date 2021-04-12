@@ -1,8 +1,11 @@
 
 const productDTO = require("./dto");
-const productModel = require("./model");
+const entriesModel = require("../exits/model");
+const existDAO = require("../exits/dao");
 const mongoose = require('mongoose');
 const Decimal = require('decimal.js-light');
+const exitsModel = require("../exits/model");
+const productModel = require('./model')
 module.exports = class productDAO {
 
   static async findAndCreate(obj) {
@@ -22,7 +25,7 @@ module.exports = class productDAO {
   }
   static async list() {
     try {
-      const listProducts = await productModel.find({}, { '__v': 0 });
+      const listProducts = await productModel.find({}, { '__v': 0, exits: 0, entries: 0 });
       return listProducts;
     } catch (error) {
       return false;
@@ -50,7 +53,18 @@ module.exports = class productDAO {
       return false;
     }
   }
-  static async deactivate(name, id) {
+  static async updatePictureProduct(picture, id) {
+    try {
+
+      const updateProduct = await productModel.findByIdAndUpdate(id, { picture });
+      return updateProduct;
+
+    } catch (error) {
+      console.log(error)
+      return false;
+    }
+  }
+ /* static async deactivate(name, id) {
     try {
       const productExistend = await productModel.findById(id);
       let msg = 'delete';
@@ -67,7 +81,7 @@ module.exports = class productDAO {
     } catch (error) {
       return false;
     }
-  }
+  }*/
   static async entriesInProduct(entrie, product_id) {
     try {
       console.log('entreeee')
@@ -80,9 +94,11 @@ module.exports = class productDAO {
 
 
       updateProductCalculate.entries.push(entrie._id);
+     
+
       const saveProduct = await updateProductCalculate.save();
       console.log(saveProduct, 'sistemass products2')
-
+     
       return saveProduct;
 
 
@@ -91,47 +107,8 @@ module.exports = class productDAO {
       return false;
     }
   }
-  static async exitsInProduct(exit, product_id) {
-    try {
-      console.log('----', exit, product_id)
-      let updateProduct = await productModel.findById(product_id);
-      console.log(updateProduct, 'sistemass products', exit);
-      let updateProductCalculate = await exitsIngresOrReturns(exit, updateProduct);
-      if (!updateProductCalculate) {
-        return false;
-      }
-
-      updateProductCalculate.exits.push(exit._id);
-      console.log('-ffffff------------------------------', updateProductCalculate)
-      const saveproduct = await updateProductCalculate.save();
-      console.log(saveproduct, 'sistemass products')
-
-      return saveproduct;
-
-
-    } catch (error) {
-      console.log(error, 'eee')
-      return false;
-    }
-  }
-
-  static async search(obj) {
-    try {
-      /**console.log(obj, '..')
-       const serachResults = await productModel.find({
-         $or: [
-           { name: { $regex: ".*" + obj.name + ".*", $options: 'i' } },
-           { email: { $regex: ".*" + obj.email + ".*", $options: 'i' } },
-           { phone: { $regex: ".*" + obj.phone + ".*", $options: 'i' } }
+  
  
- 
-         ]
-       }).sort({ createdAt: obj.order ? -1 : 1 }).limit(Number(obj.limit));*/
-      // return serachResults;
-    } catch (error) {
-
-    }
-  }
 
 
 }
@@ -161,43 +138,3 @@ const entriesIngresOrReturns = (entrie, product) => {
 
 }
 
-const exitsIngresOrReturns = (exit, product) => {
-  console.log(exit, product, '888888888888888888888888888')
-  let quantity = new Decimal(product.quantity);
-  let value_unit = new Decimal(product.value_unit);
-  let value_total = new Decimal(product.value_total);
-
-  switch (exit.types) {
-
-    case 'EXIT':
-      if (exit.quantity <= product.quantity) {
-
-
-        product.quantity = quantity.sub(exit.quantity).toNumber();
-        const newExitTotal = value_unit.mul(exit.quantity).toNumber();
-        product.value_total = value_total.sub(newExitTotal).toNumber().toFixed(2);
-        product.value_unit = new Decimal(product.value_total).div(product.quantity).toNumber().toFixed(2);
-        console.log('-----------------------------------------------------------------')
-        console.log(product)
-        console.log('-----------------------------------------------------------------')
-        return product;
-      }
-
-
-
-      return false;
-      break;
-    case 'RETURN':
-
-      product.quantity = quantity.add(exit.quantity).toNumber();
-      const newEntryTotal = value_unit.plus(exit.quantity).toNumber();
-      product.value_total = value_total.add(newEntryTotal).toNumber().toFixed(2);
-      product.value_unit = new Decimal(product.value_total).div(product.quantity).toNumber().toFixed(2);
-      return product;
-
-      break;
-    default:
-      break;
-  }
-
-}

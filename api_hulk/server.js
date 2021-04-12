@@ -26,6 +26,12 @@ fastify.register(helmet);
 fastify.register(cors);
 fastify.register(routes);
 fastify.register(formBody);
+fastify.register(require('fastify-multipart'))
+// Routes
+
+require('./src/cardex/entries/route')(fastify);
+require('./src/cardex/exits/route')(fastify);
+require('./src/cardex/product/route')(fastify);
 
 
 //Register statics-route files
@@ -35,27 +41,24 @@ fastify.register(statics, {
 })
 
 
-// Routes
-require('./src/cardex/product/route')(fastify);
-require('./src/cardex/entries/route')(fastify);
-require('./src/cardex/exits/route')(fastify);
 
-// Run the server!
-module.exports = class server {
+const start = async () => {
+  try {
+    await fastify.listen(config.PORT, '0.0.0.0');
+    fastify.log.info(`server listening on ${config.PORT}`)
 
-  static async start() {
-    try {
-      await fastify.listen(config.PORT, '0.0.0.0');
-      fastify.log.info(`server listening on ${config.PORT}`)
-    } catch (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
   }
-
-
-
 }
+start();
+// Run the server!
+module.exports = start;
+
+
+
+
 
 
 

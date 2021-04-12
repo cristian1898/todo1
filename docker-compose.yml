@@ -29,6 +29,20 @@ services:
     labels:
       traefik.port: 27017
 
+  web_hulk_store:
+    container_name: web_hulk_store
+    restart: always
+    build:
+      context: ./web_hulk
+      dockerfile: Dockerfile.developer
+    ports:
+      - 4201:4201
+    volumes:
+      - ./web_hulk:/usr/src/app
+      - ./web_hulk/node_modules:/usr/src/app/node_modules
+    depends_on:
+      - api_hulk_store
+
 volumes:
   mongo_hulk_store_volumen:
 

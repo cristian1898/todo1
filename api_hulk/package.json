@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npm i && nodemon",
-    "logs": "docker logs -f --tail=100 api_fastify_hulk_store"
+    "logs": "docker logs -f --tail=100 api_fastify_hulk_store",
+    "test": "jest --detectOpenHandles ",
+    "coverage": "jest --collectCoverageFrom=test/**.js --coverage"
   },
   "keywords": [],
   "author": "cristiancuray@gmail.com",
@@ -16,22 +18,32 @@
     "dotenv": "^8.2.0",
     "fastify": "^3.9.2",
     "fastify-cors": "^5.1.0",
-    "fastify-file-upload": "^3.0.0",
     "fastify-formbody": "^5.0.0",
     "fastify-helmet": "^5.1.0",
+    "fastify-multipart": "^4.0.3",
     "fastify-routes": "^3.0.1",
     "fastify-static": "^3.3.1",
     "forever": "^3.0.4",
     "glob": "^7.1.6",
+    "jest": "^26.6.3",
     "lodash": "^4.17.20",
+    "mocha": "^8.3.2",
     "mongoose": "^5.11.11",
     "mustache": "^4.1.0",
     "nodemon": "^2.0.7",
     "pino": "^6.11.2",
     "pino-pretty": "^4.7.1",
-    "point-of-view": "^4.12.0"
+    "point-of-view": "^4.12.0",
+    "supertest": "^6.1.3",
+    "tap": "^15.0.2"
   },
   "devDependencies": {
     "eslint": "^7.18.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

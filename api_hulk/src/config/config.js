@@ -11,5 +11,5 @@ module.exports = {
     HOST_SERVER: process.env.HOST_SERVER || 'http://localhost',
     FRONT_URL: process.env.FRONT_URL || '/',
     WORKCLEANCODE_DOMAIN: process.env.WORKCLEANCODE_DOMAIN || 'localhost'
-    
+
 }

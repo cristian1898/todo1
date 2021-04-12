@@ -39,7 +39,16 @@ const schema = new mongoose.Schema(
             type: String,
             enum: ['ENTRIE', 'RETURN'],
             required: true
+        },
+        assigne:{
+            type: String,
+            default:'entries'
+        },current_quantity: {
+            type: Number,
+            trim: true,
+            require: true
         }
+
 
     },
     {

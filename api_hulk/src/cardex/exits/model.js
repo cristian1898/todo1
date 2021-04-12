@@ -39,7 +39,12 @@ const schema = new mongoose.Schema(
             type: String,
             enum: ['EXIT', 'RETURN'],
             required: true
+        },
+        assigne:{
+            type: String,
+            default:'exits'
         }
+
     },
     {
         timestamps: true,
