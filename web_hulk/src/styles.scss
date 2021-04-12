@@ -1,0 +1,141 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap");
+body,
+a,
+span,
+p,
+button,
+div {
+  font-family: "Open Sans", sans-serif !important;
+}
+.logo_hulk {
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.navbar_base {
+  background-color: #2f4050;
+}
+.font_base24 {
+  font-size: 24px;
+}
+.padding0 {
+  padding: 0px !important;
+}
+.modal-overlay {
+  background: #0000007a !important;
+}
+
+.up {
+  display: block !important;
+  z-index: 1003 !important;
+  width: 400px;
+  top: 25px !important;
+  transform: scaleX(1) scaleY(1);
+}
+.downs {
+  display: none !important;
+}
+.pointer {
+  cursor: pointer;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent !important;
+  border-radius: 100px !important;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #c3c3c3;
+  border-radius: 100px;
+}
+
+.ups {
+  z-index: 1002 !important;
+  display: block !important;
+  opacity: 0.5 !important;
+}
+
+.downs {
+  display: none !important;
+}
+
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+#snackbar.hidde {
+  visibility: none;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}

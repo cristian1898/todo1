@@ -1,0 +1,196 @@
+<div class="">
+  <div classs="row">
+    <div class="col s12 l12 m12 xl12 card_base">
+      <div class="col s12 l12 m12 xl2 padding8 ">
+        <h4>
+          Listado de productos actuales <i class="material-icons pointer green-text"
+            (click)="clearData();save=true;modalUpCreate=true;">add_box</i>
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col s6 l4 xl4 m6 padding8">
+          <div class="input-field col s12 ">
+            <input id="first_name" type="text" name="search" [(ngModel)]="search" class="validate">
+            <label for="first_name" [ngClass]="{'active': search}">Buscar</label>
+          </div>
+        </div>
+        <div class="col s6 l4 xl4 m6 padding8">
+
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="loading" class="col s12 l12 m12 xl12 center">
+          <div class="col s12">
+            <br />
+            <br />
+            <br />
+          </div>
+          <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="" *ngIf="!loading">
+          <div class="col s6 m6 l4 xl4" *ngFor="let product of products |filter:search">
+            <div class="card horizontal" style="height: 300px;">
+              <div class="card-image">
+                <img *ngIf="product.picture ; else notPicture" [src]="backend+product.picture" style="height: 100%;">
+                <ng-template #notPicture>
+                  <img src="assets/images/producto.jpg" class="responsive-img">
+                </ng-template>
+
+
+                <span class="card-title black-text titleCard"> <a href="#" class="right red-text"
+                    (click)="modalUp= true;id = product._id"><i class="material-icons grey-text">
+                      add_a_photo </i></a> </span>
+              </div>
+              <div class="card-stacked">
+                <div class="card-content padding0 overfloow">
+                  <p class="col s12 padding0 padding-top5 ">
+                    <b>{{product.name | titlecase}}</b> <br>
+                    {{product.description | slice: 0:20}}
+                  </p>
+
+
+                </div>
+                <div class="card-action padding0">
+                  <div class="col s12 padding0">
+
+                    <span class="createAt left">
+                      <span class="black-text">Unidades:</span> {{product.quantity}} <br>
+                      <span class="black-text">Valor U/N:</span> {{product.value_unit | currency}}
+                    </span>
+                    <span class="createAt right padding-right5">
+                      <i class="material-icons tiny blue-text icons-product">
+                        event_available
+                      </i>
+                      {{product.createdAt | date :'short' }}
+                    </span> <br>
+                    <span class="createAt right padding-right5">
+                      <i class="material-icons tiny red-text icons-product">
+
+                        edit_calendar
+
+                      </i>
+                      {{product.updatedAt | date :'short' }}
+                    </span>
+                  </div>
+                  <div class="col s12 divider">
+
+                  </div>
+                  <div class="col s12 l12 m12 padding0">
+                    <p class="padding0">
+                      Referencia : {{product.reference}} <br>
+
+                      <a class="right blue-text pointer" routerLink="/{{product._id}}"> <i
+                          class="material-icons">fact_check</i> </a>
+                      <a href="#" class="right red-text" (click)="assingData(product);id=product._id;save=false"> <i
+                          class="material-icons">mode_edit</i> </a>
+
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="changePhoto" class="modal" [ngClass]="{ 'up': modalUp, 'downs': !modalUp }" style="
+      width: 300px;
+      min-height: 200px !important;
+      overflow: auto;
+      height: auto;
+      overflow: hidden;
+    ">
+  <div class="modal-content text-inicial padding32">
+
+    <div>
+
+
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
+          <input type="file" (change)="onChange($event)">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" value="{{file?.name}}" type="text">
+        </div>
+      </div>
+      <br><br>
+
+      <a class="btn btn-small poniter right" *ngIf="file?.name" (click)="onUpload()">Guardar</a>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" [ngClass]="{ 'ups': modalUp, 'downs': !modalUp }" (click)="modalUp = false"></div>
+
+<div id="Create" class="modal" [ngClass]="{ 'up': modalUpCreate, 'downs': !modalUpCreate }" style="
+      width: 400px;
+      min-height: 325px !important;
+      overflow: auto;
+      height: auto;
+      overflow: hidden;
+    ">
+  <div class="modal-content text-inicial padding32">
+
+    <div>
+      <ng-container *ngIf="save; else elseTemplate">
+        <h4 class="center">
+          Nuevo Producto
+        </h4>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <h4 class="center">
+          Actualizar Producto
+        </h4>
+
+      </ng-template>
+
+
+      <div class="input-field col s12">
+        <input [(ngModel)]="name" id="first_name" type="text" class="validate">
+        <label for="first_name" [ngClass]="{'active': name}">Nombre</label>
+      </div>
+      <div class="input-field col s12">
+        <input [(ngModel)]="reference" id="first_reference" type="text" class="validate">
+        <label for="first_reference" [ngClass]="{'active': reference}">"Refencia"e</label>
+      </div>
+      <div class="input-field col s12">
+        <input [(ngModel)]="description" id="first_description" type="text" class="validate">
+        <label for="first_description" [ngClass]="{'active': description}">Description</label>
+      </div>
+
+      <a class="btn btn-small poniter right" *ngIf="name &&reference && description"
+        (click)="saveUpdateProduct()">Guardar</a>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" [ngClass]="{ 'ups': modalUpCreate, 'downs': !modalUpCreate }"
+  (click)="modalUpCreate = false"></div>
+
+<div id="snackbar" [ngClass]="{ 'show':toast, 'hidden': !toast }">{{message}}</div>

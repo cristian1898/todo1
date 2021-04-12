@@ -1,0 +1,44 @@
+.card_base {
+  border: solid 1px #e3e3e3;
+  margin-top: 25px;
+  padding: 16px;
+}
+.listCard {
+  height: 150px !important;
+}
+::ng-deep .titleCard {
+  padding-top: 0px !important;
+  top: 0px !important;
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+::ng-deep .padding8 {
+  padding: 8px !important;
+}
+.createAt {
+  color: #696868bb;
+  font-size: 10px;
+}
+.icons-product {
+  position: relative !important;
+  top: 3px !important;
+}
+.divider {
+  height: 1px;
+  background-color: #e3e3e3;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+.padding-topf {
+  padding-top: 5px !important;
+}
+.padding-right5 {
+  padding-right: 5px !important;
+}
+.overfloow {
+  overflow: auto !important;
+}
+.margin-rigth10 {
+  margin-right: 10px;
+}

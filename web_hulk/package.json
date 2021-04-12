@@ -1,0 +1,51 @@
+{
+  "name": "app-web",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "npm i && ngcc &&  node --max-http-header-size=1000000 --max_old_space_size=10240 node_modules/@angular/cli/bin/ng serve --port 4201 --host 0.0.0.0 --disable-host-check --live-reload true --poll=2000 ",
+    "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
+    "test": "ng test",
+    "pree2e": "webdriver-manager update --standalone false --gecko false",
+    "e2e": "protractor",
+    "check4aot": "ng serve --aot",
+    "bundle": "ng build --prod --aot --verbose true",
+    "bundle4prod": "ng build --prod --aot ",
+    "postinstall": "ngcc",
+    "logs": "docker  logs -f --tail=100 web_hulk_store"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~11.2.7",
+    "@angular/common": "~11.2.7",
+    "@angular/compiler": "~11.2.7",
+    "@angular/core": "~11.2.7",
+    "@angular/forms": "~11.2.7",
+    "@angular/platform-browser": "~11.2.7",
+    "@angular/platform-browser-dynamic": "~11.2.7",
+    "@angular/router": "~11.2.7",
+    "ng2-search-filter": "^0.5.1",
+    "rxjs": "~6.6.0",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.11.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1102.6",
+    "@angular/cli": "~11.2.6",
+    "@angular/compiler-cli": "~11.2.7",
+    "@types/jasmine": "~3.6.0",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^6.0.0",
+    "jasmine-core": "~3.6.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~6.1.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~4.1.5"
+  }
+}

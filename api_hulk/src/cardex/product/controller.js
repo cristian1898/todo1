@@ -28,7 +28,7 @@ module.exports = class productController {
       return reply.status(validateProductCreate.code).send({ mgs: validateProductCreate.msg });
 
     } catch (error) {
-      console.log(error)
+
       return reply.status(500).send();
     }
   }
@@ -52,7 +52,7 @@ module.exports = class productController {
 
       reply.status(200).send(product);
     } catch (error) {
-      console.log(error, 'controller----')
+
       return reply.code(500).send();
     }
   }
@@ -64,11 +64,11 @@ module.exports = class productController {
 
 
       const updateProduct = await productDAO.update(req.body, req.params.id);
-      console.log(updateProduct, 'update')
+
       if (!updateProduct) return reply.status(400).send({ msg: 'Error update' });
       reply.status(200).send({ msg: 'update' });
     } catch (error) {
-      console.log(error, 'controller-update----')
+
       return reply.code(500).send();
     }
   }
@@ -82,7 +82,7 @@ module.exports = class productController {
 
       reply.status(200).send({ mgs: deleteOrDeactivateProduct });
     } catch (error) {
-      console.log(error, 'ee')
+
       return reply.code(500).send();
     }
   }
@@ -92,7 +92,7 @@ module.exports = class productController {
 
       const data = await req.file({ limits: { fileSize: 170000 } });
       const fileTypes = /jpeg|jpg|png|gif/;
-      console.log(data)
+
       if (!data || !data.filename || !fileTypes.test(data.mimetype))
         return reply.status(400).send({ msg: "Img required or format ivalid" });
 
@@ -108,34 +108,6 @@ module.exports = class productController {
       return reply.code(500).send();
     }
   }
-  /*END CRUD*/
-
-  /* SEARCH 
-  static async search(req, reply) {
-    try {
-      /*
-            if (
-              !req.query
-            ) {
-              return reply.status(200).send();
-            }
-            const query = req.query;
-            const obj = {
-              name: query.name ? query.name : null,
-              email: query.email ? query.email : null,
-              phone: query.phone ? query.phone : null,
-              order: query.order && query.order == 'true' ? true : false,
-              limit: query.limit ? query.limit : null,
-      
-            }
-            const searchproduct = await productDAO.search(obj);
-      
-            reply.status(200).send(searchproduct);
-    } catch (error) {
-      return reply.code(500).send();
-    }
-  }
-  /* SEARCH */
 
 }
 

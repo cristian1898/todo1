@@ -43,13 +43,7 @@ const schema = new mongoose.Schema(
         assigne:{
             type: String,
             default:'entries'
-        },current_quantity: {
-            type: Number,
-            trim: true,
-            require: true
-        }
-
-
+        },
     },
     {
         timestamps: true,

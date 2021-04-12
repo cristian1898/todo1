@@ -41,3 +41,5 @@ package-lock.json
 .vscode
 .angulardoc.json
 npm-debug.log
+public
+/public

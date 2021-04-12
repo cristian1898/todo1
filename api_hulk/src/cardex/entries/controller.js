@@ -20,11 +20,11 @@ module.exports = class entriesController {
       };
 
       const entries = await entriesDAO.findAndCreate(req.body, req.params.id);
-      const validateEntriesCreate = !entries ? { code: 400, msg: 'creation error' } : entries == 'exist' ? { code: 400, msg: 'entries alredy register' } : { code: 201, mgs: 'created' };
-      return reply.status(validateEntriesCreate.code).send({ mgs: validateEntriesCreate.msg });
+      const validateEntriesCreate = !entries ? { code: 400, msg: 'creation error' } : entries == 'exist' ? { code: 400, msg: 'entries alredy register' } : { code: 201, msg: 'created' };
+      return reply.status(validateEntriesCreate.code).send({ msg: validateEntriesCreate.msg });
 
     } catch (error) {
-      console.log(error)
+
       return reply.status(500).send();
     }
   }
@@ -51,7 +51,7 @@ module.exports = class entriesController {
 
       reply.status(200).send(entries);
     } catch (error) {
-      console.log(error, 'controller----')
+
       return reply.code(500).send();
     }
   }
@@ -63,11 +63,11 @@ module.exports = class entriesController {
 
 
       const updateentries = await entriesDAO.update(req.body, req.params.id);
-      console.log(updateentries, 'update')
+
       if (!updateentries) return reply.status(400).send();
       reply.status(200).send({ mgs: 'update' });
     } catch (error) {
-      console.log(error, 'controller-update----')
+
       return reply.code(500).send();
     }
   }
@@ -81,7 +81,7 @@ module.exports = class entriesController {
 
       reply.status(200).send({ mgs: deleteOrDeactivateentries });
     } catch (error) {
-      console.log(error, 'ee')
+
       return reply.code(500).send();
     }
   }

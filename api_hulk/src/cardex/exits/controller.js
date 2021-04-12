@@ -20,11 +20,11 @@ module.exports = class exitsController {
       };
 
       const exits = await exitsDAO.findAndCreate(req.body, req.params.id);
-      const validateExitsCreate = !exits ? { code: 400, msg: 'creation error' } : exits == 'exist' ? { code: 400, msg: 'exits alredy register' } : { code: 201, mgs: 'created' };
-      return reply.status(validateExitsCreate.code).send({ mgs: validateExitsCreate.msg });
+      const validateExitsCreate = !exits ? { code: 400, msg: 'creation error' } : exits == 'exist' ? { code: 400, msg: 'exits alredy register' } : { code: 201, msg: 'created' };
+      return reply.status(validateExitsCreate.code).send({ msg: validateExitsCreate.msg });
 
     } catch (error) {
-      console.log(error, 'eee...')
+
       return reply.status(500).send();
     }
   }
@@ -53,7 +53,7 @@ module.exports = class exitsController {
 
       reply.status(200).send(exits);
     } catch (error) {
-      console.log(error, 'controller----')
+
       return reply.code(500).send();
     }
   }
@@ -65,11 +65,11 @@ module.exports = class exitsController {
 
 
       const updateExits = await exitsDAO.update(req.body, req.params.id);
-      console.log(updateexits, 'update')
+
       if (!updateExits) return reply.status(400).send();
       reply.status(200).send({ mgs: 'update' });
     } catch (error) {
-      console.log(error, 'controller-update----')
+
       return reply.code(500).send();
     }
   }
@@ -83,7 +83,7 @@ module.exports = class exitsController {
 
       reply.status(200).send({ mgs: deleteOrDeactivateexits });
     } catch (error) {
-      console.log(error, 'ee')
+
       return reply.code(500).send();
     }
   }

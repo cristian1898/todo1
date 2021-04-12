@@ -10,13 +10,13 @@ module.exports = class entriesDAO {
     try {
       let formatEntriesData = await entriesDTO.create(obj);
       formatEntriesData.product = id_product;
-      console.log(parseFloat(formatEntriesData.value_unit), '------------')
+
       formatEntriesData.value_total = new Decimal(formatEntriesData.value_unit).mul(formatEntriesData.quantity).toNumber().toFixed(2);
-      console.log(formatEntriesData)
+
 
 
       const entriesCreated = await entriesModel.findOne({ document: formatEntriesData.document, product: id_product }) ? 'exist' : await entriesModel.create(formatEntriesData);
-      console.log('entree entriesCreated', entriesCreated)
+
       let product = true;
       if (entriesCreated && entriesCreated._id) {
         product = await productDAO.entriesInProduct(entriesCreated, id_product);
@@ -30,7 +30,7 @@ module.exports = class entriesDAO {
       return !product ? product : entriesCreated;
 
     } catch (error) {
-      console.log(error, 'error dao entries');
+
       return false;
 
     }
@@ -49,16 +49,7 @@ module.exports = class entriesDAO {
       return oneentries ? oneentries : {};
 
     } catch (error) {
-      console.log(error)
-      return false;
-    }
-  }
-  static async updateEntries(id,obj) {
-    try {
-      const updateEntries = await entriesModel.findByIdAndUpdate(id, obj);
-      return updateEntries;
-    } catch (error) {
-      console.log(error)
+
       return false;
     }
   }
